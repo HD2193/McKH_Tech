@@ -82,21 +82,6 @@ const Landing = () => {
           <ChevronDown size={24} className="text-muted-foreground" />
         </div>
       </section>
-      {/* Recognised By */}
-<section className="py-16 px-6 bg-secondary/30">
-  <div className="max-w-4xl mx-auto text-center animate-fade-in">
-    <p className="text-xl text-muted-foreground mb-8">
-      Recognised By
-    </p>
-    <div className="flex items-center justify-center">
-      <img 
-        src="public/RecongnisedBy.png" 
-        alt="Recognition Logo" 
-        className="h-60"
-      />
-    </div>
-  </div>
-</section>
 
       {/* Trusted Companies */}
       <section className="py-16 px-6 bg-secondary/30">
@@ -112,6 +97,21 @@ const Landing = () => {
         src="public/kgbp.jpeg" 
         alt="Kitchen and Bath Global Partners" 
         className="h-20 md:h-24 ml-32"
+      />
+    </div>
+  </div>
+</section>
+{/* Recognised By */}
+<section className="py-16 px-6 bg-secondary/30">
+  <div className="max-w-4xl mx-auto text-center animate-fade-in">
+    <p className="text-xl text-muted-foreground mb-8">
+      Recognised By
+    </p>
+    <div className="flex items-center justify-center">
+      <img 
+        src="public/RecongnisedBy.png" 
+        alt="Recognition Logo" 
+        className="h-48"
       />
     </div>
   </div>
