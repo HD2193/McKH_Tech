@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { Mail, Calendar, MessageSquare, CheckCircle, X } from 'lucide-react';
+import { Mail, Calendar, MessageSquare, CheckCircle, X, AlertCircle } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
 
+const supabaseUrl = 'https://rtdgyhmkrynptopdplme.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZGd5aG1rcnlucHRvcGRwbG1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0MzE3NzMsImV4cCI6MjA2OTAwNzc3M30.2k07jolqQ-IqgV1vVgMCrE4tBTMYi8l0c6IK7Iz4dtA';
+const supabase = createClient(supabaseUrl, supabaseKey);
 const Contact = () => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -10,26 +14,92 @@ const Contact = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const { name, value } = e.target;
+  setFormData(prev => ({
+    ...prev,
+    [name]: value
+  }));
+  if (error) setError('');
+};
+  const validateForm = () => {
+    if (!formData.fullName.trim()) {
+      throw new Error('Full name is required');
+    }
+    if (!formData.email.trim()) {
+      throw new Error('Email is required');
+    }
+    if (!formData.message.trim()) {
+      throw new Error('Message is required');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      throw new Error('Please enter a valid email address');
+    }
+
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(formData.fullName.trim())) {
+      throw new Error('Full name should only contain letters and spaces');
+    }
+
+    if (formData.message.trim().length < 10) {
+      throw new Error('Message should be at least 10 characters long');
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setError('');
+  
+  console.log('🚀 Form submission started');
+  console.log('📝 Form data:', formData);
+  
+  try {
+    validateForm();
+
+    const insertData = {
+      full_name: formData.fullName.trim(),
+      email: formData.email.trim().toLowerCase(),
+      company: formData.company.trim() || null,
+      message: formData.message.trim(),
+      created_at: new Date().toISOString()
+    };
+
+    console.log('📤 Sending to Supabase:', insertData);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    const { data, error: supabaseError } = await supabase
+      .from('contact_submissions')
+      .insert([insertData])
+      .select();
+
+    console.log('📥 Supabase response:', { data, error: supabaseError });
+
+    if (supabaseError) {
+      console.error('❌ Supabase error details:', {
+        message: supabaseError.message,
+        details: supabaseError.details,
+        hint: supabaseError.hint,
+        code: supabaseError.code
+      });
+      
+      if (supabaseError.code === '23505') {
+        throw new Error('This email has already been used to submit a form recently');
+      } else if (supabaseError.code === '42501') {
+        throw new Error('Database permission error. Please contact support.');
+      } else {
+        throw new Error(`Database error: ${supabaseError.message}`);
+      }
+    }
+
+    console.log('✅ Data inserted successfully:', data);
     setIsSubmitted(true);
     setIsSubmitting(false);
     
-    // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
       setFormData({
@@ -39,16 +109,24 @@ const Contact = () => {
         message: ''
       });
     }, 3000);
-  };
+
+  } catch (err) {
+    console.error('💥 Error saving contact form:', err);
+    const errorMessage = err.message || 'Unknown error occurred';
+    setError(errorMessage);
+    setIsSubmitting(false);
+  }
+};
 
   const resetForm = () => {
-    setFormData({
-      fullName: '',
-      email: '',
-      company: '',
-      message: ''
-    });
-  };
+  setFormData({
+    fullName: '',
+    email: '',
+    company: '',
+    message: ''
+  });
+  setError('');
+};
 
   return (
     <div className="min-h-screen pt-20 bg-grid">
@@ -104,6 +182,12 @@ const Contact = () => {
                   </button>
                 )}
               </div>
+              {error && (
+  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+    <AlertCircle size={20} className="text-red-500 flex-shrink-0" />
+    <p className="text-red-700 text-sm">{error}</p>
+  </div>
+)}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
