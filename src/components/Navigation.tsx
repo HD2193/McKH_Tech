@@ -33,7 +33,7 @@ const Navigation = () => {
         <Link to="/" className="flex items-center">
   <img 
     src="/mckh (2).png" 
-    alt="MCKH" 
+    alt="McKH" 
     className="h-24 w-auto object-contain"
   />
 </Link>
