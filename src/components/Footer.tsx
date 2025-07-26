@@ -10,12 +10,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Left - Logo and Email */}
           <div className="text-center md:text-left">
-            <div className="font-bold text-2xl text-foreground mb-2">MCKH</div>
+            <div className="font-bold text-2xl text-foreground mb-2">McKH Technologies</div>
             <a
               href="mailto:contact@mckh.tech"
               className="text-muted-foreground hover:text-primary transition-colors"
             >
-              contact@mckh.tech
+              contact@mckhtech.com
             </a>
           </div>
 
@@ -72,7 +72,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-6 border-t border-glass-border text-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} MCKH. All rights reserved. Building the future with AI.
+            © {currentYear} McKH. All rights reserved. Building the future with AI.
           </p>
         </div>
       </div>

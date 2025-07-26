@@ -18,7 +18,7 @@ const Solutions = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToContact = () => {
+  const navigateToContact = () => {
     window.location.href = '/contact';
   };
 
@@ -91,7 +91,7 @@ const Solutions = () => {
               Let's build your AI future together.
             </p>
             <button
-              onClick={scrollToContact}
+              onClick={navigateToContact}
               className="btn-pill btn-primary w-full text-sm"
             >
               Start your AI journey
@@ -123,7 +123,8 @@ const Solutions = () => {
           <section
             key={solution.id}
             id={index === 1 ? 'second-section' : undefined}
-            className={`py-20 px-6 ${index % 2 === 0 ? 'bg-background' : 'bg-secondary/20'}`}
+            className={`py-20 px-6 ${index % 2 === 0 ? 'bg-background' : 'bg-secondary/20'} cursor-pointer hover:bg-opacity-80 transition-colors duration-300`}
+            onClick={navigateToContact}
           >
             <div className="max-w-7xl mx-auto">
               <div className={`flex flex-col lg:flex-row items-center gap-12 ${
@@ -188,7 +189,7 @@ const Solutions = () => {
             Every great AI transformation starts with a conversation. Let's discuss how our solutions can work for you.
           </p>
           <button
-            onClick={scrollToContact}
+            onClick={navigateToContact}
             className="btn-pill btn-primary text-lg px-8 py-4"
           >
             Start your AI journey

@@ -32,7 +32,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center">
   <img 
-    src="public/mckh (2).png" 
+    src="/mckh (2).png" 
     alt="MCKH" 
     className="h-24 w-auto object-contain"
   />

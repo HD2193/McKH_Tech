@@ -35,6 +35,14 @@ const Products = () => {
     }
   ];
 
+  const navigateToContact = () => {
+    window.location.href = '/contact';
+  };
+
+  const navigateToSolutions = () => {
+    window.location.href = '/solutions';
+  };
+
   return (
     <div className="min-h-screen pt-20 bg-dots">
       {/* Header */}
@@ -71,13 +79,12 @@ const Products = () => {
                 description={product.description}
                 isComingSoon={product.isComingSoon}
                 className={`delay-${index * 100}`}
+                onDemoClick={navigateToContact}
               />
             ))}
           </div>
         </div>
       </section>
-
-           
 
       {/* CTA Section */}
       <section className="py-20 px-6">
@@ -88,18 +95,12 @@ const Products = () => {
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
             Whether you're interested in one of our existing products or need something custom-built, we're here to help you harness the power of AI for your specific needs.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <button
-              onClick={() => window.location.href = '/contact'}
-              className="btn-pill btn-primary text-lg px-8 py-4"
+              onClick={navigateToContact}
+              className="btn-pill btn-primary text-xl px-12 py-5"
             >
               Start your AI journey
-            </button>
-            <button
-              onClick={() => window.location.href = '/solutions'}
-              className="btn-pill btn-outline text-lg px-8 py-4"
-            >
-              Explore Solutions
             </button>
           </div>
         </div>

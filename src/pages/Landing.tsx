@@ -223,7 +223,7 @@ const Landing = () => {
               UNI 360°
             </div>
             <img 
-              src="public/kgbp.jpeg" 
+              src="/kgbp.jpeg" 
               alt="Kitchen and Bath Global Partners" 
               className="h-20 md:h-24 ml-32"
             />
@@ -239,7 +239,7 @@ const Landing = () => {
           </p>
           <div className="flex items-center justify-center">
             <img 
-              src="public/RecongnisedBy.png" 
+              src="/RecongnisedBy.png" 
               alt="Recognition Logo" 
               className="h-48"
             />

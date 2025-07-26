@@ -5,20 +5,26 @@ interface ProductCardProps {
   description: string;
   isComingSoon?: boolean;
   className?: string;
+  onDemoClick?: () => void;
 }
 
-const ProductCard = ({ title, description, isComingSoon = false, className = '' }: ProductCardProps) => {
+const ProductCard = ({ title, description, isComingSoon = false, className = '', onDemoClick }: ProductCardProps) => {
   const handleCTA = () => {
     if (isComingSoon) {
       // Handle "Notify Me" logic here
       alert('Thank you for your interest! We\'ll notify you when it\'s ready.');
     } else {
-      // Scroll to contact or redirect
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
+      // Use the passed onDemoClick function if available, otherwise fallback to original logic
+      if (onDemoClick) {
+        onDemoClick();
       } else {
-        window.location.href = '/contact';
+        // Fallback: Scroll to contact or redirect
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.location.href = '/contact';
+        }
       }
     }
   };
